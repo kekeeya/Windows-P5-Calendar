@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
+    <!-- Deliberately dependency-free. Everything the calendar needs to draw
+         itself is in here, so the same code renders on a build machine, in the
+         parity checker and inside the Windows app. -->
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>Mona.Tools</RootNamespace>
+    <AssemblyName>Mona.Tools</AssemblyName>
+    <!-- No Windows here on purpose: replacing artwork should not require the
+         machine that runs the app. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mona.Core\Mona.Core.csproj" />
+  </ItemGroup>
+
+</Project>

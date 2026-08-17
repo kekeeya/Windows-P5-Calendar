@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <!-- So the project still compiles on a machine that is not Windows: the
+         calendar can then be rendered and checked anywhere. Running the app, of
+         course, still needs Windows. -->
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>Mona.App</RootNamespace>
+    <AssemblyName>Mona</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- Generated from the tray artwork by Mona.Parity (the "icon" mode), so the
+         file icon and the tray icon stay one drawing rather than two that drift.
+         Regenerate after replacing MonaHead.png. -->
+    <ApplicationIcon>..\..\assets\Tray\Mona.ico</ApplicationIcon>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <InvariantGlobalization>false</InvariantGlobalization>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mona.Core\Mona.Core.csproj" />
+  </ItemGroup>
+
+  <!-- The art pack travels beside the executable rather than inside it: it is
+       five megabytes of PNG that never changes, and keeping it a folder means it
+       can be swapped without a rebuild. -->
+  <ItemGroup>
+    <!-- The whole folder, not a list of the ones that exist today. Naming them
+         individually already cost one release its tray icon: the art was added,
+         the app looked for it, and the packaging quietly did not carry it. -->
+    <Content Include="..\..\assets\**\*">
+      <Link>assets\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <!-- Both, and not just the first: CopyToOutputDirectory is what `build`
+           honours and CopyToPublishDirectory is what `publish` does. With only
+           the one, publishing creates the folders and leaves them empty, and the
+           app that comes out of it starts to an apology about missing art. -->
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

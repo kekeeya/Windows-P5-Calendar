@@ -1,0 +1,27 @@
+# Deliberately short. These are the conventions the code already follows, written
+# down so an editor stops fighting them — not a style guide nobody agreed to.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{md,tsv}]
+# Trailing spaces are meaningful in Markdown, and columns are meaningful in a TSV.
+trim_trailing_whitespace = false
+
+[*.{json,yml,yaml}]
+indent_size = 2
+
+[*.cs]
+# What the existing sources do throughout.
+csharp_style_namespace_declarations = file_scoped:suggestion
+csharp_using_directive_placement = outside_namespace:suggestion
+csharp_prefer_braces = when_multiline:suggestion
+dotnet_sort_system_directives_first = true
+csharp_new_line_before_open_brace = all

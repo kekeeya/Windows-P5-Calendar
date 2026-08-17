@@ -1,0 +1,25 @@
+# Normalise line endings in the repository, and let each checkout have what its
+# platform expects. This project is written on macOS and built on Windows, so
+# without it the first Windows commit rewrites every file.
+* text=auto
+
+# Shell scripts must stay LF even on a Windows checkout: CRLF makes the shebang
+# line unparseable and the script fails with a message that has nothing to do
+# with the cause.
+*.sh text eol=lf
+
+*.cs      text diff=csharp
+*.csproj  text
+*.sln     text eol=crlf
+*.md      text
+*.json    text
+*.tsv     text
+*.swift   text
+*.manifest text
+
+# Artwork and packages are never diffed or merged.
+*.png binary
+*.ico binary
+*.zip binary
+*.exe binary
+*.dll binary

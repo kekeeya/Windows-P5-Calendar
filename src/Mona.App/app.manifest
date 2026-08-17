@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
+  <assemblyIdentity version="1.0.0.0" name="Mona.app"/>
+
+  <!-- DPI awareness is declared in code instead, through
+       Application.SetHighDpiMode in Program.Main: WinForms warns if a manifest
+       and the API both claim it, and the API is the one it honours. The sticker
+       needs per-monitor awareness either way — it is a bitmap sized in physical
+       pixels and drawn through UpdateLayeredWindow, so being stretched by the
+       system is precisely what it must not be. -->
+
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- Windows 10 and 11 -->
+      <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
+    </application>
+  </compatibility>
+</assembly>
