@@ -249,6 +249,45 @@ public static class CalendarRaster
     }
 
     /// <summary>
+    /// Grows a mask by one pixel in every direction.
+    ///
+    /// Used on a pocket before it is folded back into its layer. Whether a pixel
+    /// is inside a pocket is decided on the mask, which thresholds coverage at a
+    /// half — so the ring where the surrounding artwork fades from solid to
+    /// nothing, coverage between a half and one, counts as boundary and keeps its
+    /// partial value. Everywhere else that ring is the antialiased edge between
+    /// two different colours and is exactly right; inside a pocket that is about
+    /// to be filled it has the same colour on both sides and nothing left to
+    /// antialias against, so it reads as a hairline of whatever lies under the
+    /// layer. Growing the pocket over it removes the seam without moving any edge
+    /// that still separates two colours.
+    /// </summary>
+    public static byte[] Grow(byte[] mask, int w, int h)
+    {
+        var output = new byte[w * h];
+        for (int y = 0; y < h; y++)
+        {
+            int row = y * w;
+            for (int x = 0; x < w; x++)
+            {
+                if (mask[row + x] == 0) continue;
+                for (int dy = -1; dy <= 1; dy++)
+                {
+                    int yy = y + dy;
+                    if (yy < 0 || yy >= h) continue;
+                    for (int dx = -1; dx <= 1; dx++)
+                    {
+                        int xx = x + dx;
+                        if (xx < 0 || xx >= w) continue;
+                        output[yy * w + xx] = 1;
+                    }
+                }
+            }
+        }
+        return output;
+    }
+
+    /// <summary>
     /// How many separate pieces a shape is in. Only ever compared before and
     /// after a bridging close, to tell "this joined things up" from "this just
     /// fattened one blob".

@@ -14,7 +14,13 @@ set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 runtime="${1:-win-x64}"
-version="0.1.0"
+# Read from the project rather than repeated here: two copies of a version
+# number stay equal exactly until the day someone bumps one of them.
+version=$(sed -n 's|.*<Version>\(.*\)</Version>.*|\1|p' "$here/src/Mona.App/Mona.App.csproj")
+if [ -z "$version" ]; then
+    echo "cannot read <Version> from src/Mona.App/Mona.App.csproj" >&2
+    exit 1
+fi
 
 cd "$here"
 rm -rf "dist/Mona" "dist/Mona-$version-$runtime.zip"

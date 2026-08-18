@@ -14,6 +14,11 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <RootNamespace>Mona.App</RootNamespace>
     <AssemblyName>Mona</AssemblyName>
+    <!-- The one place the version is written down. tools/publish.sh reads it
+         from here to name the package, so the file on disk and the version the
+         exe reports in its properties cannot disagree. -->
+    <Version>0.1.1</Version>
+    <Product>Windows-P5-Calendar</Product>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <!-- Generated from the tray artwork by Mona.Parity (the "icon" mode), so the
          file icon and the tray icon stay one drawing rather than two that drift.

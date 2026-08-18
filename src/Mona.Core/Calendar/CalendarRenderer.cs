@@ -144,7 +144,10 @@ public sealed class CalendarRenderer
         // too wide for the square brush below to close, and open at one end so it
         // is not a hole in the layer's own sense.
         if (layer.White && (parts.Contains("under") || parts.Contains("card")))
-            coverage.Raise(CalendarRaster.Holes(coverage.Mask(), w, h));
+        {
+            var sheet = CalendarRaster.Holes(coverage.Mask(), w, h);
+            coverage.Raise(CalendarRaster.Grow(sheet, w, h));
+        }
 
         // Sealed only where the layer has backings. A lettering layer must not be:
         // the white slots inside a Chinese character are two or three pixels wide
@@ -244,7 +247,11 @@ public sealed class CalendarRenderer
                 solid = bridged;
             }
         }
-        coverage.Raise(CalendarRaster.Holes(solid, w, h));
+        // Grown by a pixel: the ring where the plates fade out sits between two
+        // blacks once the pocket is filled, and left partial it shows the white
+        // sheet underneath as a hairline.
+        var pocket = CalendarRaster.Holes(solid, w, h);
+        coverage.Raise(CalendarRaster.Grow(pocket, w, h));
     }
 
     private Bitmap32? Asset(CalendarLayout.Entry entry, string part, CalendarLayout layout)
